@@ -15,7 +15,7 @@ public class InitializerServiceImpl implements InitializerService {
     @Autowired
 	PredictionRepository predictionRepository; 
 
-    private final int daysOfYear = 360; //el enunciado no dice cuantos dias tiene un año de cada planeta, lo igualo a la tierra
+    private final int daysOfYear = 365; //el enunciado no dice cuantos dias tiene un año de cada planeta, lo igualo a la tierra
     private Planet planet;
     private Planet planet2;
     private Planet planet3;
@@ -29,7 +29,6 @@ public class InitializerServiceImpl implements InitializerService {
         this.planet3 = planet3;
         this.predictionRepository = predictionRepository;
 
-        predictionRepository.deleteAll();
 
         for(int i = 0; i < daysOfYear; i++) {
         	predictionRepository.save(getForecast(i));
@@ -47,7 +46,7 @@ public class InitializerServiceImpl implements InitializerService {
         if(triangle.pointContainedInTriangle(planet.obtainPosition(dayPointer)) && triangle.getArea() == 0) { 
             if(triangle.pointContainedInTriangle(SunPosition)) {
                 //los tres planetas están alineados entre sí y alineados con respecto al sol = sequía
-                return new Forecast("sequía", dayPointer, triangle.getPerimeter());
+                return new Forecast("sequia" ,dayPointer, triangle.getPerimeter());
             } else {
                 //los tres planetas están alineados entre sí, pero no están alineados con el sol = óptimas de presión y temperatura
                 return new Forecast("optimo de presión y temperatura", dayPointer, triangle.getPerimeter());
@@ -57,7 +56,7 @@ public class InitializerServiceImpl implements InitializerService {
                 return new Forecast("lluvia", dayPointer, triangle.getPerimeter());
         }
 
-        return null;
+        return new Forecast("soleado", dayPointer, triangle.getPerimeter());
 	}
     
 }
