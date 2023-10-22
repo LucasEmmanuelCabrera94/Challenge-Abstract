@@ -28,6 +28,7 @@ el sol.
 
 ## Realizar:
 Un programa informático para poder predecir en los próximos 10 años:
+
 ● ¿Cuántos periodos de sequía habrá?
 
 ● ¿Cuántos periodos de lluvia habrá y que día será el pico máximo de lluvia?

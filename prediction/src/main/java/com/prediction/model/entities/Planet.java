@@ -16,5 +16,19 @@ public class Planet {
 	private String name;
 	private int velocityPerDay;
 	private boolean inClockWise;
-	private float distance;
+	private double distance;
+
+	public Point obtainPosition(int day) {
+		//result in negative or positive
+		int direction = (inClockWise)? 1 : -1;
+		int totalGrade = 360;
+
+		double posicionInGrade = (day * this.velocityPerDay * direction) % totalGrade;
+		double positionInRadio = Math.toRadians(posicionInGrade);
+		
+		double x = Math.cos(positionInRadio) * this.distance;
+		double y = Math.sin(positionInRadio) * this.distance;
+
+		return new Point(x, y);
+	}
 }
