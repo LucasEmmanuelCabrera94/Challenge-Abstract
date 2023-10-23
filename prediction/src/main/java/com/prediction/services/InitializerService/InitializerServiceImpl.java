@@ -20,6 +20,10 @@ public class InitializerServiceImpl implements InitializerService {
     private Planet planet2;
     private Planet planet3;
 
+    private int contSequia = 0;
+    private int contLluvia = 0;
+    private int contOptimo = 0; 
+
     @Override
     @Transactional(readOnly = true)
     public void init(Planet planet, Planet planet2, Planet planet3, PredictionRepository predictionRepository) {
@@ -29,34 +33,42 @@ public class InitializerServiceImpl implements InitializerService {
         this.planet3 = planet3;
         this.predictionRepository = predictionRepository;
 
+        predictionRepository.deleteAll();
 
         for(int i = 0; i < daysOfYear; i++) {
         	predictionRepository.save(getForecast(i));
         }
+        System.out.println("Contador Sequia: " + contSequia); 
+        System.out.println("Contador Lluvia: " + contLluvia); 
+        System.out.println("Contador Optima: " + contOptimo); 
     }
-
+    
     public Forecast getForecast(int dayPointer) {				
+        Point SunPosition = new Point(0, 0);
+
         Triangle triangle = Triangle.builder().vertex1(planet.obtainPosition(dayPointer))
                                               .vertex2(planet2.obtainPosition(dayPointer))
                                               .vertex3(planet3.obtainPosition(dayPointer))
                                               .build();
 
-        Point SunPosition = new Point(0, 0);
-        
-        if(triangle.pointContainedInTriangle(planet.obtainPosition(dayPointer)) && triangle.getArea() == 0) { 
-            if(triangle.pointContainedInTriangle(SunPosition)) {
+
+        if(triangle.arePlanetsAligned()) { 
+            if(triangle.alineadoconelsol(SunPosition)) {
                 //los tres planetas están alineados entre sí y alineados con respecto al sol = sequía
+                contSequia++;
                 return new Forecast("sequia" ,dayPointer, triangle.getPerimeter());
             } else {
+                contOptimo++;
                 //los tres planetas están alineados entre sí, pero no están alineados con el sol = óptimas de presión y temperatura
-                return new Forecast("optimo de presión y temperatura", dayPointer, triangle.getPerimeter());
-            }
+                return new Forecast("optimo de presion y temperatura", dayPointer, triangle.getPerimeter());
+                 }
         } else if (triangle.pointContainedInTriangle(SunPosition)) {
+            contLluvia++;
                 // el sol se encuentra dentro del triángulo y  los tres planetas no están alineados = lluvia
                 return new Forecast("lluvia", dayPointer, triangle.getPerimeter());
         }
-
-        return new Forecast("soleado", dayPointer, triangle.getPerimeter());
+        
+        return new Forecast("optimo de presion y temperatura", dayPointer, triangle.getPerimeter());
 	}
     
 }
