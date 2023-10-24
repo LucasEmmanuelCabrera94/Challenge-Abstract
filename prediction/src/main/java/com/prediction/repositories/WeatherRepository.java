@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.prediction.model.entities.Weather;
 
-@Repository("wheaterRepository")
+@Repository("weatherRepository")
 public interface WeatherRepository extends CrudRepository<Weather, Long> {
-   public Weather getWheater(int day);
+   public Weather getWeatherById(long id);
 }

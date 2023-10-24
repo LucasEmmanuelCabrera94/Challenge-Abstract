@@ -1,5 +1,6 @@
 package com.prediction.services.InitializerService;
 
+import com.prediction.repositories.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ public class InitializerServiceImpl implements InitializerService {
     @Autowired
 	PredictionRepository predictionRepository;
 
+    @Autowired
+    WeatherRepository weatherRepository;
+
     private Planet planet;
     private Planet planet2;
     private Planet planet3;
@@ -28,12 +32,13 @@ public class InitializerServiceImpl implements InitializerService {
 
     @Override
     @Transactional(readOnly = true)
-    public void init(Planet planet, Planet planet2, Planet planet3, PredictionRepository predictionRepository) {
+    public void init(Planet planet, Planet planet2, Planet planet3, PredictionRepository predictionRepository, WeatherRepository weatherRepository) {
         this.planet = planet;
         this.planet2 = planet2;
         this.planet3 = planet3;
+        this.weatherRepository = weatherRepository;
         this.predictionRepository = predictionRepository;
-        this.weather =  Weather.builder().build();
+        this.weather =  new Weather();
 
         predictionRepository.deleteAll();
 
@@ -43,7 +48,8 @@ public class InitializerServiceImpl implements InitializerService {
         	predictionRepository.save(getForecast(i));
         }
 
-        new Weather(daysOfDrought, rainyDays, optimalDays, this.weather.getDayMaxPeak(), this.weather.getMaxPeak());
+        Weather galaxyWeather = new Weather(daysOfDrought, rainyDays, optimalDays, this.weather.getDayMaxPeak(), this.weather.getMaxPeak());
+        weatherRepository.save(galaxyWeather);
     }
 
     public Weather getWeather() {

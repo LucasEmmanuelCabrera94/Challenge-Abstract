@@ -1,5 +1,6 @@
 package com.prediction.controllers;
 
+import com.prediction.model.entities.Weather;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,16 +26,16 @@ public class PredictionController {
    @RequestMapping("/weather")
    public Forecast weather(@RequestParam(value="day") String day) {
            Forecast forecast = predictionRepository.getForecastByDay(Integer.parseInt(day));
-           forecast.setDay(Integer.parseInt(day));
            return forecast;
    }
        
-   @RequestMapping("/pregunta/1")
-   public String questionOne() {
-           return weatherRepository.getWheater(1).getDaysOfDrought();
+   @RequestMapping("/pregunta")
+   public Weather questionOne(@RequestParam(value="id") String id) {
+           Weather weather =  weatherRepository.getWeatherById(Long.parseLong(id));
+           return weather;
    }
          
-   @RequestMapping("/pregunta/2")
+  /* @RequestMapping("/pregunta/2")
    public String questionTwo() {
            return questionsService.getQuestionTwo();
    }
@@ -42,6 +43,6 @@ public class PredictionController {
    @RequestMapping("/pregunta/3")
    public String questionThree() {
            return questionsService.getQuestionThree();
-   }
+   }*/
 
 }

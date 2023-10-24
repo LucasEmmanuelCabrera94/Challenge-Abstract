@@ -1,5 +1,6 @@
 package com.prediction.utils;
 
+import com.prediction.repositories.WeatherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.prediction.model.entities.Planet;
@@ -11,7 +12,7 @@ public class Builders {
     @Autowired
     private InitializerService initializerService = new InitializerServiceImpl();
 
-    public void init(PredictionRepository predictionRepository){
+    public void init(PredictionRepository predictionRepository, WeatherRepository weatherRepository){
         Planet ferengi = Planet.builder().name("Ferengi")
                                         .velocityPerDay(500)
                                         .inClockWise(true)
@@ -29,6 +30,6 @@ public class Builders {
                                         .build();
 
         
-        initializerService.init(ferengi, betasoide, vulcano, predictionRepository);
+        initializerService.init(ferengi, betasoide, vulcano, predictionRepository, weatherRepository);
     }
 }

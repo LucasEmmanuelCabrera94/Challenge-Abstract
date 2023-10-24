@@ -1,33 +1,40 @@
 package com.prediction.model.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Builder
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "weather")
 public class Weather {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Column(name = "\"id\"")
+	private Long id;
 	private int daysOfDrought;
 	private int rainyDays;
 	private int optimalDays;
 	private int dayMaxPeak;
 	private double maxPeak;
+
+	public Weather(){}
+
+	public Weather(int daysOfDrought, int rainyDays, int optimalDays, int dayMaxPeak, double maxPeak) {
+		super();
+		this.daysOfDrought = daysOfDrought;
+		this.rainyDays = rainyDays;
+		this.optimalDays = optimalDays;
+		this.dayMaxPeak = dayMaxPeak;
+		this.maxPeak = maxPeak;
+	}
 
 	public void setMaxPeak(double perimeter, int day){
 		if (maxPeak < perimeter) {

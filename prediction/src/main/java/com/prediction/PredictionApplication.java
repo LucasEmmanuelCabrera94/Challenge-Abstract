@@ -1,5 +1,6 @@
 package com.prediction;
 
+import com.prediction.repositories.WeatherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,10 +18,10 @@ public class PredictionApplication {
 	}
 
 	@Bean
-	public CommandLineRunner setup(PredictionRepository predictionRepository) {
+	public CommandLineRunner setup(PredictionRepository predictionRepository, WeatherRepository weatherRepository) {
 		return (args) -> {
 			Builders buildInit = new Builders();
-			buildInit.init(predictionRepository);
+			buildInit.init(predictionRepository, weatherRepository);
 		};
 	}
 }

@@ -7,5 +7,5 @@ import com.prediction.model.entities.Forecast;
 
 @Repository("predictionRepository")
 public interface PredictionRepository extends CrudRepository<Forecast, Long> {
-   public Forecast getForecastByDay(int day);
+   public Forecast getForecastByDay(int id);
 }
