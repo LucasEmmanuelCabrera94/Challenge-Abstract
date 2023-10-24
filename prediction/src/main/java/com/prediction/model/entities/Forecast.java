@@ -7,7 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
+@Setter
+@Getter
 @Table(name = "forecast")
 public class Forecast {
     @Id
@@ -26,29 +31,6 @@ public class Forecast {
 		this.day = day;
 		this.perimeter = perimeter;
 	}
-	public Long getId() {
-		return id;
-	}
-	public String getWeather() {
-		return weather;
-	}
-	public int getDay() {
-		return day;
-	}
-	public double getPerimeter() {
-		return perimeter;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public void setWeather(String weather) {
-		this.weather = weather;
-	}
-	public void setDay(int day) {
-		this.day = day;
-	}
-	public void setPerimeter(double perimeter) {
-		this.perimeter = perimeter;
-	}
+
 }
 

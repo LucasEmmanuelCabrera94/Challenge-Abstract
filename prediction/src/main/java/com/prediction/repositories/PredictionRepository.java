@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.prediction.model.entities.Forecast;
 
-@Repository("pronosticoRepository")
+@Repository("predictionRepository")
 public interface PredictionRepository extends CrudRepository<Forecast, Long> {
    public Forecast getForecastByDay(int day);
 }

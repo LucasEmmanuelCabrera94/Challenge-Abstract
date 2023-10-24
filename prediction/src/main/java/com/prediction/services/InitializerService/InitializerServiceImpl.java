@@ -8,39 +8,46 @@ import com.prediction.model.entities.Forecast;
 import com.prediction.model.entities.Planet;
 import com.prediction.model.entities.Point;
 import com.prediction.model.entities.Triangle;
+import com.prediction.model.entities.Weather;
 import com.prediction.repositories.PredictionRepository;
 
 @Service
 public class InitializerServiceImpl implements InitializerService {
     @Autowired
-	PredictionRepository predictionRepository; 
+	PredictionRepository predictionRepository;
 
-    private final int daysOfYear = 365; //el enunciado no dice cuantos dias tiene un año de cada planeta, lo igualo a la tierra
     private Planet planet;
     private Planet planet2;
     private Planet planet3;
 
-    private int contSequia = 0;
-    private int contLluvia = 0;
-    private int contOptimo = 0; 
+    private Weather weather;
+    
+    private int daysOfDrought = 0;
+    private int rainyDays = 0;
+    private int optimalDays = 0; 
 
     @Override
     @Transactional(readOnly = true)
     public void init(Planet planet, Planet planet2, Planet planet3, PredictionRepository predictionRepository) {
-        //depedency injection 
         this.planet = planet;
         this.planet2 = planet2;
         this.planet3 = planet3;
         this.predictionRepository = predictionRepository;
+        this.weather =  Weather.builder().build();
 
         predictionRepository.deleteAll();
 
+        //el enunciado no dice cuantos dias tiene un año de cada planeta, lo igualo a la tierra
+        int daysOfYear = 365 * 10;
         for(int i = 0; i < daysOfYear; i++) {
         	predictionRepository.save(getForecast(i));
         }
-        System.out.println("Contador Sequia: " + contSequia); 
-        System.out.println("Contador Lluvia: " + contLluvia); 
-        System.out.println("Contador Optima: " + contOptimo); 
+
+        new Weather(daysOfDrought, rainyDays, optimalDays, this.weather.getDayMaxPeak(), this.weather.getMaxPeak());
+    }
+
+    public Weather getWeather() {
+        return this.weather;
     }
     
     public Forecast getForecast(int dayPointer) {				
@@ -51,24 +58,17 @@ public class InitializerServiceImpl implements InitializerService {
                                               .vertex3(planet3.obtainPosition(dayPointer))
                                               .build();
 
-
-        if(triangle.arePlanetsAligned()) { 
-            if(triangle.alineadoconelsol(SunPosition)) {
-                //los tres planetas están alineados entre sí y alineados con respecto al sol = sequía
-                contSequia++;
-                return new Forecast("sequia" ,dayPointer, triangle.getPerimeter());
-            } else {
-                contOptimo++;
-                //los tres planetas están alineados entre sí, pero no están alineados con el sol = óptimas de presión y temperatura
-                return new Forecast("optimo de presion y temperatura", dayPointer, triangle.getPerimeter());
-                 }
-        } else if (triangle.pointContainedInTriangle(SunPosition)) {
-            contLluvia++;
-                // el sol se encuentra dentro del triángulo y  los tres planetas no están alineados = lluvia
-                return new Forecast("lluvia", dayPointer, triangle.getPerimeter());
-        }
-        
-        return new Forecast("optimo de presion y temperatura", dayPointer, triangle.getPerimeter());
+        if (triangle.arePlanetsAligned() && triangle.alignedWithTheSun(SunPosition)) {
+            daysOfDrought++;
+            return new Forecast("sequia" ,dayPointer, triangle.getPerimeter());
+        } else if (!triangle.alignedWithTheSun(SunPosition)) {
+            optimalDays++;
+            return new Forecast("óptimo de presión y temperatura", dayPointer, triangle.getPerimeter());
+        } else if (triangle.pointContainedInTriangle(SunPosition) && !triangle.arePlanetsAligned()) {
+            rainyDays++;
+            weather.setMaxPeak(triangle.getPerimeter(), dayPointer);
+            return new Forecast("lluvia", dayPointer, triangle.getPerimeter());
+        } 
+        return null;
 	}
-    
 }
