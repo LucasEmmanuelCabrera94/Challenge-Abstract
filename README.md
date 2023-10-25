@@ -49,3 +49,42 @@ Utilizar Java/Spring
 ## Extra:
 ● Hostear el modelo de datos y la API REST en un cloud computing libre y enviar la URL
 para consultar el clima de un día en particular
+
+# Decisiones tomadas:
+- Como se desea realizar un programa que pueda predecir los proximos 10 años, y la cantidad de días que conforman un año no fue aclarada. Fue asumido que un año equivale a 365 dias.
+- Para tener una persistenca de datos, se decidió usar h2 y en "application.properties" estan seteadas las información necesaria para poder ingresar.
+
+
+![img.png](img.png)
+- Se realizó un endpoint aparte para poder tener respuesta de las preguntas realizadas.
+
+  http://localhost:8080/pregunta?id=1 (1,2 o 3 dependiendo que respuesta se desee)
+- Al no poder realizar un job para cargar la base de datos, se utilizo la anotacion @Beans para realizarlo.
+- Se decidió no permitir el ingreso de parametros invalidos.
+Por ejemplo:
+
+- ![img_3.png](img_3.png)
+
+## No se llego:
+- A realizar el job.
+- Realizar el Extra.
+
+# Funcionamiento:
+- Descargar el repositorio y correrlo.
+- Mientras se levante el localhost, se cargará automatizamente la base de datos en h2.
+- Realizar alguna pegada a algunos de los endpoint a disposicion:
+
+## Obtener Clima del dia desado:
+- Devolverá la condición climática del día consultado en un formato Json.
+Ejemplo:
+- http://localhost:8080/clima?dia=10
+
+![img_1.png](img_1.png)
+
+
+## Obtener respuesta:
+- Devolverá la respuesta a las tres preguntas que se hicieron en el enunciado.
+Ejemplo:
+- http://localhost:8080/pregunta?id=1
+
+![img_2.png](img_2.png)
