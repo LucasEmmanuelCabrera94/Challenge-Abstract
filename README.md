@@ -51,27 +51,27 @@ Utilizar Java/Spring
 para consultar el clima de un día en particular
 
 # Decisiones tomadas:
-- Como se desea realizar un programa que pueda predecir los proximos 10 años, y la cantidad de días que conforman un año no fue aclarada. Fue asumido que un año equivale a 365 dias.
-- Para tener una persistenca de datos, se decidió usar h2 y en "application.properties" estan seteadas las información necesaria para poder ingresar.
+- Como se desea realizar un programa que pueda predecir los proximos 10 años, y la cantidad de días que conforman un año no fue aclarada. Asumí que un año equivale a 365 dias.
+- Para tener una persistenca de datos, decidí usar h2 y en "application.properties" podrán encontrar seteada las información necesaría para poder ingresar a h2-console.
 
 
 ![img.png](img.png)
-- Se realizó un endpoint aparte para poder tener respuesta de las preguntas realizadas.
+- Realicé un endpoint aparte para poder obtener respuesta de las preguntas realizadas.
 
   http://localhost:8080/pregunta?id=1 (1,2 o 3 dependiendo que respuesta se desee)
-- Al no poder realizar un job para cargar la base de datos, se utilizo la anotacion @Beans para realizarlo.
-- Se decidió no permitir el ingreso de parametros invalidos.
+- Al no poder realizar un job para cargar la base de datos, utilicé la anotacion @Beans para realizarlo.
+- Decidí no permitir el ingreso de parametros invalidos.
 Por ejemplo:
 
 - ![img_3.png](img_3.png)
 
 ## No se llego:
-- A realizar el job.
+- Realizar el job.
 - Realizar el Extra.
 
 # Funcionamiento:
 - Descargar el repositorio y correrlo.
-- Mientras se levante el localhost, se cargará automatizamente la base de datos en h2.
+- Mientras se levanta localhost, se cargará automatizamente la base de datos en h2.
 - Realizar alguna pegada a algunos de los endpoint a disposicion:
 
 ## Obtener Clima del dia desado:
