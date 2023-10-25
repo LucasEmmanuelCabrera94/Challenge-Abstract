@@ -11,6 +11,10 @@ public class QuestionServiceImpl implements QuestionsService {
     @Autowired
     private WeatherRepository weatherRepository;
 
+    public QuestionServiceImpl(WeatherRepository weatherRepository){
+        this.weatherRepository = weatherRepository;
+    }
+
     public QuestionResponse getQuestionResponse(long id) {
         String response;
         return switch ((int) id) {

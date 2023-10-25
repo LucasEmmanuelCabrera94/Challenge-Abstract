@@ -44,12 +44,12 @@ public class Weather {
 	}
 
 	public String getDaysOfDrought() {
-		return String.format("En 10 años habrá %d de sequía", this.daysOfDrought);
+		return String.format("En 10 años habrá %d periodos de sequía", this.daysOfDrought);
 	}
 	public String getRainyDays() {
-		return String.format("En 10 años habrá %d de lluvia y el dia %d habra un pico máximo de lluvia", this.rainyDays, this.dayMaxPeak);
+		return String.format("En 10 años habrá %d periodos de lluvia y el dia %d habra un pico máximo de lluvia", this.rainyDays, this.dayMaxPeak);
 	}
 	public String getOptimalDays() {
-		return String.format("En 10 años habrá %d de condiciones óptimas de presión y temperatura", this.optimalDays);
+		return String.format("En 10 años habrá %d periodos de condiciones óptimas de presión y temperatura", this.optimalDays);
 	}
 }

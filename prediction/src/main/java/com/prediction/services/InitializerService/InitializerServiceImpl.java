@@ -32,7 +32,7 @@ public class InitializerServiceImpl implements InitializerService {
 
     @Override
     @Transactional(readOnly = true)
-    public void init(Planet planet, Planet planet2, Planet planet3, PredictionRepository predictionRepository, WeatherRepository weatherRepository) {
+    public void initializer(Planet planet, Planet planet2, Planet planet3, PredictionRepository predictionRepository, WeatherRepository weatherRepository) {
         this.planet = planet;
         this.planet2 = planet2;
         this.planet3 = planet3;
@@ -45,18 +45,17 @@ public class InitializerServiceImpl implements InitializerService {
         //el enunciado no dice cuantos dias tiene un año de cada planeta, lo igualo a la tierra
         int daysOfYear = 365 * 10;
         for(int i = 0; i < daysOfYear; i++) {
-        	predictionRepository.save(getForecast(i));
+            Forecast forecast = getForecast(i);
+            if (forecast != null) {
+                predictionRepository.save(getForecast(i));
+            }
         }
 
         Weather galaxyWeather = new Weather(daysOfDrought, rainyDays, optimalDays, this.weather.getDayMaxPeak(), this.weather.getMaxPeak());
         weatherRepository.save(galaxyWeather);
     }
-
-    public Weather getWeather() {
-        return this.weather;
-    }
     
-    public Forecast getForecast(int dayPointer) {				
+    private Forecast getForecast(int dayPointer) {
         Point SunPosition = new Point(0, 0);
 
         Triangle triangle = Triangle.builder().vertex1(planet.obtainPosition(dayPointer))

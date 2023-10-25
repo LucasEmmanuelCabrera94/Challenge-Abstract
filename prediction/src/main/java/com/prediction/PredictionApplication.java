@@ -21,7 +21,7 @@ public class PredictionApplication {
 	public CommandLineRunner setup(PredictionRepository predictionRepository, WeatherRepository weatherRepository) {
 		return (args) -> {
 			Builders buildInit = new Builders();
-			buildInit.init(predictionRepository, weatherRepository);
+			buildInit.initializer(predictionRepository, weatherRepository);
 		};
 	}
 }
