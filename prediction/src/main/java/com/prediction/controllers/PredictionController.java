@@ -1,6 +1,8 @@
 package com.prediction.controllers;
 
+import com.prediction.model.entities.response.ForecastResponse;
 import com.prediction.model.entities.response.QuestionResponse;
+import com.prediction.validators.ValidatorController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,10 +20,19 @@ public class PredictionController {
 
     @Autowired
     private QuestionsService questionsService;
+
+    @Autowired
+    private ValidatorController validatorController;
     
    @RequestMapping("/clima")
-   public Forecast weather(@RequestParam(value="dia") String day) {
-           return predictionRepository.getForecastByDay(Integer.parseInt(day));
+   public ForecastResponse weather(@RequestParam(value="dia") int dia) {
+       try {
+           validatorController.validateRequestParam(dia);
+       } catch (IllegalAccessException iae){
+           return ForecastResponse.builder().error(iae.getMessage()).build();
+       }
+       Forecast response = predictionRepository.getForecastByDay(dia);
+       return ForecastResponse.builder().forecast(response).build();
    }
        
    @RequestMapping("/pregunta")
