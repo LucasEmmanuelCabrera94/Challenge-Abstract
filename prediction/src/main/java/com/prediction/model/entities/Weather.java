@@ -43,13 +43,13 @@ public class Weather {
 		}
 	}
 
+	public String getDaysOfDrought() {
+		return String.format("En 10 años habrá %d de sequía", this.daysOfDrought);
+	}
 	public String getRainyDays() {
-		return "prueba rainy";
+		return String.format("En 10 años habrá %d de lluvia y el dia %d habra un pico máximo de lluvia", this.rainyDays, this.dayMaxPeak);
 	}
 	public String getOptimalDays() {
-		return "prueba optimal";
-	}
-	public String getDaysOfDrought() {
-		return "prueba drought";
+		return String.format("En 10 años habrá %d de condiciones óptimas de presión y temperatura", this.optimalDays);
 	}
 }

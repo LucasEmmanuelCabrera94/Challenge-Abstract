@@ -8,6 +8,4 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface InitializerService {
     void init(Planet planet, Planet planet2, Planet planet3, PredictionRepository predictionRepository, WeatherRepository weatherRepository);
-
-    Weather getWeather();
 }

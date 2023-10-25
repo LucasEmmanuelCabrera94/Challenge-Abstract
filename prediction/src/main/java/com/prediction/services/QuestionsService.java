@@ -1,9 +1,7 @@
 package com.prediction.services;
 
-public interface QuestionsService {
-    String getQuestionOne();
+import com.prediction.model.entities.response.QuestionResponse;
 
-    String getQuestionTwo();
-    
-    String getQuestionThree();
+public interface QuestionsService {
+    QuestionResponse getQuestionResponse(long id);
 }
