@@ -13,7 +13,6 @@ import com.prediction.utils.Builders;
 public class PredictionApplication {
 
     public static void main(String[] args) {
-		//Build Context
 		SpringApplication.run(PredictionApplication.class, args);
 	}
 

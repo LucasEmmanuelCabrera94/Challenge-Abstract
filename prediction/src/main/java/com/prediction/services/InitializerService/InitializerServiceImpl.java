@@ -42,7 +42,6 @@ public class InitializerServiceImpl implements InitializerService {
 
         predictionRepository.deleteAll();
 
-        //el enunciado no dice cuantos dias tiene un año de cada planeta, lo igualo a la tierra
         int daysOfYear = 365 * 10;
         for(int i = 1; i < daysOfYear+1; i++) {
             Forecast forecast = getForecast(i);

@@ -18,13 +18,17 @@ public class Planet {
 	private boolean inClockWise;
 	private double distance;
 
+	/**
+	 * the position of a planet is obtained.
+	 * @return a Point with the position.
+	 */
 	public Point obtainPosition(int day) {
 		//result in negative or positive
 		int direction = (inClockWise)? 1 : -1;
 		int totalGrade = 360;
 
-		double posicionInGrade = (day * this.velocityPerDay * direction) % totalGrade;
-		double positionInRadio = Math.toRadians(posicionInGrade);
+		double positionInGrade = (day * this.velocityPerDay * direction) % totalGrade;
+		double positionInRadio = Math.toRadians(positionInGrade);
 		
 		double x = Math.cos(positionInRadio) * this.distance;
 		double y = Math.sin(positionInRadio) * this.distance;
